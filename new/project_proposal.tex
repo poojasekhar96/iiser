@@ -1,0 +1,103 @@
+
+
+\documentclass[colorlinks=true,pdfstartview=FitV,linkcolor=blue,
+            citecolor=red,urlcolor=magenta]{ligodoc}
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{fancyhdr}
+\usepackage{subfigure}
+\usepackage{hyperref}
+\ligodccnumber{T}{11}{XXXXX}{}{vX}% \ligodistribution{AIC, ISC}
+
+
+\title{Optical Loss charcterization}
+
+\author{SURF Student: Pooja Sekhar,
+        Mentors: Gautam Venugopalan, Koji Arai}
+
+
+\begin{document}
+
+
+\section{Introduction}  
+Albert Einstein predicted the existence of gravitational waves (GWs) through his General Theory of Relativity in 1916. As compared to electromagnetic waves, GWs have very low absorption cross-section which makes them very effective in providing information about the astrophysical events that are invisible using traditional telescopes. \cite{1} As a result of the relentless efforts by many scientists over many decades, these waves with extremely small amplitude were discovered on September 14, 2015 by the twin detectors of aLIGO with a signal to noise ratio of 24. \cite{2}
+
+Although the basic technique of Michelson interferometer has been employed, several advancements including four stage suspension of test masses for seismic isolation, highly stable laser that can be boosted upto 200W and, control loop mechanisms and many more have been included so that the intensity of light at the photodiode which is a function of the differential arm length of the interferometer gives the gravitational wave strain. \cite{3} The test masses are made of fused silica to minimize IR absorption, optical coatings are extremely smooth to reduce scatter loss and they are large with 34cm diameter and 40kg weight for vibration isolation. \cite{4} Being a very sensitive instrument, aLIGO is prone to a wide range of noise sources in spite of these precautions. Scattering of light, one of the noise sources, is the deflection of light from its path defined by specular reflection caused due to the irregularities on the surface of test masses. It reduces the power circulating in the Fabry perot cavities leading to a low signal to noise ratio and scattered light might also couple back into the instrument imparting a random phase noise. 
+
+In order to measure the scattered light CCD camera, Basler ace acA640-120gm, with Gigabit Ethernet (GigE) connection has been used such that it can image the test masses. A telescopic lens system has to be placed between the camera and vacuum viewport to get focused images. Moreover, the lens solution has to be chosen such that the image circle formed at its focal plane i.e. camera sensor just encloses the whole pixel array. \cite{5} 
+
+Since intensity of the scattered light is angle dependent, bidirectional reflectance distribution function (BRDF) as defined below, has been employed to calibrate CCD. \cite{6}
+\begin{equation}
+    BRDF = \frac{P_{s}/\Omega}{P_{i} \cos(\theta_{s})}
+\end{equation}
+where $\theta_{s}$ is the scattering angle and $\Omega$ is the solid angle subtended at the sensor.
+
+Here Lambertian model with BRDF = $\frac{1}{\pi}$  sr\textsuperscript{-1} has been assumed and CCD has been calibrated accordingly. The scattered power ($P_{s}$) has been calculated from the images of the calibrated CCD according to the following equation,
+\begin{equation}
+    P_{s} = Calibration Factor (CF) \times  \frac{\sum\limits_{ROI} Pixel Value}{Exposure Time} 
+\end{equation}
+where ROI is the region of interest selected around the beam spot in the captured images. Here the pixel counts have been summed over the ROI and normalized by the camera exposure time. \cite{6}
+
+\section{Objectives}
+\begin{itemize}
+    \item Implement appropriate two lens system that focuses the image of the optic onto the camera.
+    \item Characterize losses in all the optical cavities of the interferometer by installing many GigE cameras that image all optics.
+    \item Develop a python program to interface Pylon software of GigE camera, Basler aca640-120gm.
+    \item Identify the sources of point scatterers like scratches and dust partcles on the surfaces of test masses and map their motion across the surface by capturing images and video.
+    \item Develop an efficient network system for all the cameras that can be integrated to the main network in the lab for faster and efficient data transmission and analysis.
+    \item Analyze the captured images and video.
+    
+    
+\end{itemize}
+
+\section{Approach}
+Scattering of light by test masses leads to the loss of intensity circulating in the optical cavities. This reduces the sensitivity of the interferometer reducing its signal to noise ratio. These losses in all the optical cavities inside the interferometer need to be characterized using GigE camera and proper mitigation techniques can be developed to reduce the scatter loss. In order to do this, the sources of scattering mainly point scatterers like scratches and dust particles uniformly distributed across the surface of the mirrors and likely through the depth of coatings need to be identified and their motion across the surface as light reflects from it need to be analyzed. In order to analyze the motion of point scatterers across the surface and characterize losses in optical cavities, many GigE cameras are required to be installed such that they image the surfaces of all the optics in the LIGO 40m prototype lab and these  different sub camera networks need to be integrated with the main network at the lab through a network switch. In order to get a clear image from the camera, a telescopic lens system with adjustable focal length that focuses the image of various test masses onto the camera has to be installed. We also have to employ a better technique to interface with the Pylon software of Basler aca640-120gm using python and develop a python code to take a stream video of the optic surfaces. Later, these images and videos have to be analyzed to calculate the beam spot size and find out sources of intensity fluctuations. Also, appropriate techniques have to be developed to reduce noise in the CCD images.
+
+\section{Work Plan}
+\begin{itemize}
+    \item \textbf{Week 1-3}: Develop a python code to interface with the Pylon software of Basler aca640-120gm camera. Implement appropriate two lens system to focus the image of the optic onto the camera.
+    \item \textbf{Week 4-6}: Install GigE cameras imaging all the optics and capture images and take video of the optic.
+    \item \textbf{Week 7-11}: Analyze the images and video using image processing techniques.
+\end{itemize}
+       
+
+
+\begin{thebibliography}{9}
+      
+	\bibitem{1}
+	  David G Blair,
+	  \emph{The Detection of Gravitational Waves}.
+	 Cambridge university press (2005).  
+	 
+	\bibitem{2}
+	  B. P. Abbott \textit{et. al.},
+	  \emph{Observation of Gravitational Waves from a Binary Black Hole Merger}.
+	 Phys. Rev. Lett. 116, 061102 (2010). 
+	 
+	 \bibitem{3}
+       \url{https://www.ligo.caltech.edu/page/ligo-technology}
+       
+     \bibitem{4}
+     \url{https://www.ligo.caltech.edu/page/optics}
+      
+     \bibitem{5}
+	  Jigyasa Nigam, Mentors: Gautam Venugopalan, Johannes Eichholz
+	  \emph{Characterization of Test Mass Scattering}.
+	 LIGO-SURF Report (2017).  
+	 
+	 \bibitem{6}
+	  Fabian Magana-Sandoval, Rana Adhikari, Valera Frolov, Jan Harms, Jacqueline Lee, Shannon Sankar, Peter R. Saulson and Joshua R. Smith
+	  \emph{Large-angle scattered light measurements for quantum-noise filter cavity design studies}.
+	 Technical Note LIGO-T1400252-LSC (2014).
+	 
+ 
+\end{thebibliography} %Must end the environment
+
+
+
+\end{document} 
